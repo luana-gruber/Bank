@@ -17,5 +17,46 @@ public class Agencia {
 	 private String nomeAgencia;
 	 private String enderecoAgencia;
 	 private String telefoneAgencia;
+	 private Integer numeroAgencia;
+	 
+	//Se não houver dá erro no MySql
+	public Agencia() {
+	}
+
+	public Agencia(Integer id, String nomeAgencia, String enderecoAgencia, String telefoneAgencia, Integer numeroAgencia) {
+		this.id = id;
+		this.nomeAgencia = nomeAgencia;
+		this.enderecoAgencia = enderecoAgencia;
+		this.telefoneAgencia = telefoneAgencia;
+		this.numeroAgencia = numeroAgencia;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public String getNomeAgencia() {
+		return nomeAgencia;
+	}
+
+	public String getEnderecoAgencia() {
+		return enderecoAgencia;
+	}
+
+	public void setEnderecoAgencia(String enderecoAgencia) {
+		this.enderecoAgencia = enderecoAgencia;
+	}
+
+	public String getTelefoneAgencia() {
+		return telefoneAgencia;
+	}
+
+	public void setTelefoneAgencia(String telefoneAgencia) {
+		this.telefoneAgencia = telefoneAgencia;
+	}
+
+	public Integer getNumeroAgencia() {
+		return numeroAgencia;
+	}
 	 
 }
