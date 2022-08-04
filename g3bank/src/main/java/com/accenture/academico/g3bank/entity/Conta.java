@@ -53,7 +53,7 @@ public class Conta {
 	}
 	
 	public void saque(Double valor, Date dataHoraMovimento) {
-		if (valor < 0) {
+		if (this.saldoConta < 0) {
 			System.out.println("Saldo insuficiente");
 		}
 		this.saldoConta -= valor;
