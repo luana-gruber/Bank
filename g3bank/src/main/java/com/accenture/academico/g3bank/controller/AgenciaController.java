@@ -22,6 +22,7 @@ import com.accenture.academico.g3bank.repository.AgenciaRepository;
 @RestController
 
 public class AgenciaController {
+	
 	@Autowired
     private AgenciaRepository agenciaRepository;
 	
@@ -72,5 +73,4 @@ public class AgenciaController {
 	        else
 	            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	    }
-	    
 }
