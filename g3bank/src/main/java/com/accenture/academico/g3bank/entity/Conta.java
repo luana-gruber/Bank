@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import com.accenture.academico.g3bank.enums.TipoConta;
 
@@ -23,6 +24,13 @@ public class Conta {
 	private TipoConta tipoconta;
 	private Integer senhaCliente;
 	private Date dataHoraMovimento;
+	
+	@ManyToOne
+	private Agencia agencia;
+	
+	public Conta() {
+		
+	}
 	
 	public Conta(Integer id, String numeroConta, Double saldoConta, Integer senhaCliente) {
 		super();
@@ -51,7 +59,15 @@ public class Conta {
 	public Integer getSenhaCliente() {
 		return senhaCliente;
 	}
-	
+
+	public Agencia getAgencia() {
+		return agencia;
+	}
+
+	public void setAgencia(Agencia agencia) {
+		this.agencia = agencia;
+	}
+
 	public void saque(Double valor, Date dataHoraMovimento) {
 		if (this.saldoConta < 0) {
 			System.out.println("Saldo insuficiente");
