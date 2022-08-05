@@ -26,6 +26,7 @@ public class Conta {
 	private Date dataHoraMovimento;
 	
 	@ManyToOne
+	@JoinColumn(name = "id_agencia")
 	private Agencia agencia;
 	
 	public Conta() {
