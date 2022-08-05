@@ -17,22 +17,26 @@ import org.springframework.web.bind.annotation.RestController;
 import com.accenture.academico.g3bank.entity.Cliente;
 import com.accenture.academico.g3bank.repository.ClienteRepository;
 
+import io.swagger.annotations.ApiOperation;
+
 
 
 @RestController
-@RequestMapping
+@RequestMapping(path = "/g3bank")
 public class ClienteController {
 
 	@Autowired
 	private ClienteRepository clienteRepository;
 
 	@RequestMapping(value = "/cliente", method = RequestMethod.GET)
+	@ApiOperation(value="Retorna uma lista de clientes")
 	    public List<Cliente> Get() {
 	        return clienteRepository.findAll();
 	}
 
 
 	@RequestMapping(value = "/cliente/{id}", method = RequestMethod.GET)
+	@ApiOperation(value="Retorna um cliente único")
 	    public ResponseEntity<Cliente> GetById(@PathVariable(value = "id") Integer id)
 	        
 	    {
@@ -45,6 +49,7 @@ public class ClienteController {
 	    }
 	
 	 @RequestMapping(value = "/cliente", method =  RequestMethod.POST)
+	 @ApiOperation(value="Salva um cliente")
 	    public Cliente Post(@Valid @RequestBody Cliente cliente)
 	    {
 	        return clienteRepository.save(cliente);
@@ -52,6 +57,7 @@ public class ClienteController {
 	    }
 	 
 	 @RequestMapping(value="/{id}", method = RequestMethod.PUT)
+	 @ApiOperation(value="Atualiza um cliente")
 		public ResponseEntity<Cliente> Put(@PathVariable(value = "id") Integer id, @Valid @RequestBody Cliente novoCliente)
 		
 	 {
@@ -73,6 +79,7 @@ public class ClienteController {
 		  }
 	  
 		@RequestMapping(value="/{id}",method = RequestMethod.DELETE)
+		@ApiOperation(value="Deleta um cliente")
 		public ResponseEntity<Void> Delete(@PathVariable Integer id){
 
 			 Optional<Cliente> cliente = clienteRepository.findById(id);

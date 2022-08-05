@@ -18,20 +18,24 @@ import org.springframework.web.bind.annotation.RestController;
 import com.accenture.academico.g3bank.entity.Agencia;
 import com.accenture.academico.g3bank.repository.AgenciaRepository;
 
+import io.swagger.annotations.ApiOperation;
+
 @Controller
 @RestController
-
+@RequestMapping(path = "/g3bank")
 public class AgenciaController {
 	
 	@Autowired
     private AgenciaRepository agenciaRepository;
 	
 	 @RequestMapping(value = "/agencia", method = RequestMethod.GET)
+	 @ApiOperation(value="Retorna uma lista de agências")
 	    public List<Agencia> Get() {
 	        return agenciaRepository.findAll();
 	    }
 	 
 	 @RequestMapping(value = "/agencia/{id}", method = RequestMethod.GET)
+	 @ApiOperation(value="Retorna uma agência única")
 	    public ResponseEntity<Agencia> GetById(@PathVariable(value = "id") Integer id)
 	    {
 	        Optional<Agencia> agencia = agenciaRepository.findById(id);
@@ -42,12 +46,14 @@ public class AgenciaController {
 	    }
 	 
 	 @RequestMapping(value = "/agencia", method =  RequestMethod.POST)
+	 @ApiOperation(value="Salva uma agência")
 	    public Agencia Post(@Valid @RequestBody Agencia agencia)
 	    {
 	        return agenciaRepository.save(agencia);
 	    }
 	 
 	 @RequestMapping(value = "/agencia/{id}", method =  RequestMethod.PUT)
+	 @ApiOperation(value="Atualiza uma agência")
 	    public ResponseEntity<Agencia> Put(@PathVariable(value = "id") Integer id, @Valid @RequestBody Agencia newAgencia)
 	    {
 	        Optional<Agencia> oldAgencia = agenciaRepository.findById(id);
@@ -63,6 +69,7 @@ public class AgenciaController {
 	    }
 	    
 	   @RequestMapping(value = "/agencia/{id}", method = RequestMethod.DELETE)
+	   @ApiOperation(value="Deleta uma agência")
 	    public ResponseEntity<Object> Delete(@PathVariable(value = "id") Integer id)
 	    {
 	        Optional<Agencia> agencia = agenciaRepository.findById(id);

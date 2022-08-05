@@ -35,12 +35,13 @@ public class Agencia {
 	 public Agencia() {
 	}
 	 public Agencia(Integer id, String nomeAgencia, String enderecoAgencia,
-			String telefoneAgencia, Integer numeroAgencia) {
+			String telefoneAgencia, Integer numeroAgencia,  List<Conta> contas) {
 		this.id = id;
 		this.nomeAgencia = nomeAgencia;
 		this.enderecoAgencia = enderecoAgencia;
 		this.telefoneAgencia = telefoneAgencia;
 		this.numeroAgencia = numeroAgencia;
+		this.contas = contas;
 	}
 
 	 public Integer getId() {
