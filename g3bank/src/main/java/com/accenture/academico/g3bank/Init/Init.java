@@ -15,6 +15,9 @@ public class Init implements ApplicationListener<ContextRefreshedEvent> {
 
 	@Autowired
 	AgenciaRepository agenciaRepo;
+	
+	@Autowired
+	private ContaRepository contaRepo;
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
