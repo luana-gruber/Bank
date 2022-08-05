@@ -25,6 +25,7 @@ public class Conta {
 	private Integer senhaCliente;
 	private Date dataHoraMovimento;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "id_agencia")
 	private Agencia agencia;
