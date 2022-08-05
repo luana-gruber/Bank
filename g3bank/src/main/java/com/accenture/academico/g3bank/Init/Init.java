@@ -18,11 +18,11 @@ public class Init implements ApplicationListener<ContextRefreshedEvent> {
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
-		Conta conta1 = new Conta(1, "12", 1.400, 123456);
-		Agencia agencia = new Agencia(1, "G3Bank Centro", "Rua Osvaldo Cruz, 1999", "(19)9999-9999", 24);
+		Conta conta1 = new Conta(null, "12", 1.400, 123456);
+		Agencia agencia = new Agencia(null, "G3Bank Centro", "Rua Osvaldo Cruz, 1999", "(19)9999-9999", 24, conta1);
 		
-		agencia.setContas(Arrays.asList(conta1));
-		conta1.setAgencia(agencia);
-		agenciaRepo.save(agencia);
+		
+		agenciaRepo.saveAll(Arrays.asList(agencia));
+		contaRepo.saveAll(Arrays.asList(conta1));
 	}
 }
