@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.accenture.academico.g3bank.entity.Agencia;
 
 @Repository
-public interface AgenciaRepository extends JpaRepository<Agencia, Integer>{
+public interface AgenciaRepository extends JpaRepository<Agencia, Long>{
 
 }
