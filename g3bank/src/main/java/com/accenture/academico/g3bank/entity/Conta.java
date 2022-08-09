@@ -1,31 +1,34 @@
 package com.accenture.academico.g3bank.entity;
 
-import java.util.Date;
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import com.accenture.academico.g3bank.enums.TipoConta;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Conta {
+public class Conta implements Serializable {
+    private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 
 	@Column(nullable = true)
 	private String numeroConta;
 	private Double saldoConta = 0.0;
+	
+	@Enumerated(EnumType.STRING)
 	private TipoConta tipoconta;
-	private Integer senhaCliente;
-	private Date dataHoraMovimento;
 	
 	@JsonIgnore
 	@ManyToOne
@@ -36,15 +39,22 @@ public class Conta {
 		
 	}
 	
-	public Conta(Integer id, String numeroConta, Double saldoConta, Integer senhaCliente) {
-		super();
+	public Conta(Long id, String numeroConta, TipoConta tipoConta, Double saldoConta) {
 		this.id = id;
 		this.numeroConta = numeroConta;
 		this.saldoConta = saldoConta;
-		this.senhaCliente = senhaCliente;
+		this.tipoconta = tipoConta;
+	}
+	
+	public Conta(Long id, String numeroConta, TipoConta tipoConta, Double saldoConta, Agencia agencia) {
+		this.id = id;
+		this.numeroConta = numeroConta;
+		this.saldoConta = saldoConta;
+		this.agencia = agencia;
+		this.tipoconta = tipoConta;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
@@ -55,13 +65,13 @@ public class Conta {
 	public Double getSaldoConta() {
 		return saldoConta;
 	}
+	
+	public void setSaldoConta(Double saldoConta) {
+		this.saldoConta = saldoConta;
+	}
 
 	public TipoConta getTipoconta() {
 		return tipoconta;
-	}
-
-	public Integer getSenhaCliente() {
-		return senhaCliente;
 	}
 
 	public Agencia getAgencia() {
@@ -71,20 +81,42 @@ public class Conta {
 	public void setAgencia(Agencia agencia) {
 		this.agencia = agencia;
 	}
-
-	public void saque(Double valor, Date dataHoraMovimento) {
-		if (this.saldoConta < 0) {
-			System.out.println("Saldo insuficiente");
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
 		}
-		this.saldoConta -= valor;
-		this.dataHoraMovimento = dataHoraMovimento;
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Conta other = (Conta) obj;
+		if (id == null) {
+			if (other.id!= null) {
+				return false;
+			}
+		} else if (!id.equals(other.id)) {
+			return false;
+		}
+		return true;
 	}
-	
-	
-	public void deposito(Double valor, Date dataHoraMovimento) {
-		this.saldoConta += valor;
-		this.dataHoraMovimento = dataHoraMovimento;
-	}
+
+//	public void saque(Double valor, Date dataHoraMovimento) {
+//		if (this.saldoConta < 0) {
+//			System.out.println("Saldo insuficiente");
+//		}
+//		this.saldoConta -= valor;
+//		this.dataHoraMovimento = dataHoraMovimento;
+//	}
+//	
+//	
+//	public void deposito(Double valor, Date dataHoraMovimento) {
+//		this.saldoConta += valor;
+//		this.dataHoraMovimento = dataHoraMovimento;
+//	}
 	
 //	public void tranferencia(Double valor, Date dataHoraMovimento, Integer idContaDestino) {
 //		if(idContaDestido == this.numeroConta.isPresent ) {

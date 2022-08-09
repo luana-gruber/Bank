@@ -27,7 +27,7 @@ public class AgenciaService {
 		Optional<Agencia> agencia = agenciaRepository.findById(id);
 		
 		return agencia.orElseThrow(() -> new EntityNotFoundException(
-				"Objeto não encontrado! Id: " + id ));
+				"Agência não encontrado! Id: " + id ));
 	}
 	
 	public Agencia save(Agencia agencia) {
@@ -50,6 +50,7 @@ public class AgenciaService {
             Agencia agencia = search(newAgencia.getId());
             agencia.setEnderecoAgencia(newAgencia.getEnderecoAgencia());
             agencia.setTelefoneAgencia(newAgencia.getTelefoneAgencia());
+            agencia.setContas(newAgencia.getContas());
            
             return  agenciaRepository.save(agencia);
     }

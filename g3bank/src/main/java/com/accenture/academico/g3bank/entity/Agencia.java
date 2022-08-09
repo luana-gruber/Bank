@@ -73,6 +73,10 @@ public class Agencia implements Serializable {
 		return contas;
 	}
 	 
+	public void setContas(List<Conta> contas) {
+		this.contas = contas;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

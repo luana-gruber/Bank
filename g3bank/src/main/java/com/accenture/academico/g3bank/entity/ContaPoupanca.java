@@ -5,7 +5,7 @@ public class ContaPoupanca extends Conta {
 	private Double rendimento;
 	
 	public ContaPoupanca(Integer id, String numeroConta, Double saldoConta, Integer senhaCliente, Double rendimento) {
-		super(id, numeroConta, saldoConta, senhaCliente);
+		super(id, numeroConta, saldoConta);
 		this.rendimento = rendimento;
 	}
 	
