@@ -35,7 +35,7 @@ public class AgenciaService {
 			throw new EmptyFieldsException("Nome da agência não foi preenchido!");
 		}
 		else if (agencia.getEnderecoAgencia().isEmpty()) {
-			throw new EmptyFieldsException("Endereçoda agência não foi preenchido!");
+			throw new EmptyFieldsException("Endereço da agência não foi preenchido!");
 		}
 		else if (agencia.getTelefoneAgencia().isEmpty()) {
 			throw new EmptyFieldsException("Telefone da agência não foi preenchido!");

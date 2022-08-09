@@ -1,12 +1,10 @@
 package com.accenture.academico.g3bank.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.accenture.academico.g3bank.entity.Cliente;
-import com.accenture.academico.g3bank.repository.ClienteRepository;
+import com.accenture.academico.g3bank.service.ClienteService;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -26,71 +24,57 @@ import io.swagger.annotations.ApiOperation;
 public class ClienteController {
 
 	@Autowired
-	private ClienteRepository clienteRepository;
+	private ClienteService clienteService;
 
-	@RequestMapping(value = "/cliente", method = RequestMethod.GET)
+	@RequestMapping(value = "/clientes", method = RequestMethod.GET)
 	@ApiOperation(value="Retorna uma lista de clientes")
-	    public List<Cliente> Get() {
-	        return clienteRepository.findAll();
+	    public ResponseEntity<List<Cliente>> Get() {
+		List<Cliente> clientes = clienteService.searchAll();
+        return ResponseEntity.ok().body(clientes);
 	}
 
 
-	@RequestMapping(value = "/cliente/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/cliente/{cpf}", method = RequestMethod.GET)
 	@ApiOperation(value="Retorna um cliente único")
-	    public ResponseEntity<Cliente> GetById(@PathVariable(value = "id") Integer id)
+	    public ResponseEntity<Cliente> GetById(@PathVariable String cpf)
 	        
 	    {
-		 Optional<Cliente> cliente = clienteRepository.findById(id);
-	        if(cliente.isPresent())
-	            return new ResponseEntity<Cliente>(cliente.get(), HttpStatus.OK);
-	        else
-	            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	        
+		Cliente cliente = clienteService.searchCpf(cpf);
+	       
+	       if (cliente == null) {
+				return ResponseEntity.notFound().build();
+			}
+	       else {
+	    	   return ResponseEntity.ok().body(cliente);
+	       }
 	    }
 	
 	 @RequestMapping(value = "/cliente", method =  RequestMethod.POST)
 	 @ApiOperation(value="Salva um cliente")
-	    public Cliente Post(@Valid @RequestBody Cliente cliente)
+	    public ResponseEntity<Cliente> Post(@Valid @RequestBody Cliente cliente)
 	    {
-	        return clienteRepository.save(cliente);
+		 Cliente newCliente = clienteService.save(cliente);
+		 return ResponseEntity.ok().body(newCliente);
 	        
 	    }
 	 
-	 @RequestMapping(value="/{id}", method = RequestMethod.PUT)
+	 @RequestMapping(value="cliente/{cpf}", method = RequestMethod.PUT)
 	 @ApiOperation(value="Atualiza um cliente")
-		public ResponseEntity<Cliente> Put(@PathVariable(value = "id") Integer id, @Valid @RequestBody Cliente novoCliente)
+		public ResponseEntity<Cliente> Put(@PathVariable String cpf, @Valid @RequestBody Cliente newCliente)
 		
 	 {
-		 
-		  Optional<Cliente> contatoCliente = clienteRepository.findById(id);
-		  if(contatoCliente.isPresent()) {
-			  Cliente cliente = contatoCliente.get();
-			  cliente.setNomeCliente(novoCliente.getNomeCliente());
-			  cliente.setTelefoneCliente(novoCliente.getTelefoneCliente());
-			  cliente.setEmailCliente(novoCliente.getEmailCliente());
-			  
-			  clienteRepository.save(cliente);
-			  return new ResponseEntity<Cliente>(cliente, HttpStatus.OK);
-		   }
-	        else
-	            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		  	Cliente cliente = clienteService.updateClient(cpf, newCliente);
+	        return ResponseEntity.ok().body(cliente);
 		  
-			  
-		  }
+	 }
 	  
-		@RequestMapping(value="/{id}",method = RequestMethod.DELETE)
+		@RequestMapping(value="cliente/{cpf}",method = RequestMethod.DELETE)
 		@ApiOperation(value="Deleta um cliente")
-		public ResponseEntity<Void> Delete(@PathVariable Integer id){
-
-			 Optional<Cliente> cliente = clienteRepository.findById(id);
-			 if(cliente.isPresent()) {
-				 clienteRepository.delete(cliente.get());
-			     return new ResponseEntity<>(HttpStatus.OK);
-		        }
-		        else
-		        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		    }
+		public ResponseEntity<Void> Delete(@PathVariable String cpf){
+			
+			clienteService.delete(cpf);
+			return ResponseEntity.noContent().build();
 			 
 		}
-	 
+	}
 

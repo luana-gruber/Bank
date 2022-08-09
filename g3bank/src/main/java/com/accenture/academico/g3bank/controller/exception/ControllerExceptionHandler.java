@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import com.accenture.academico.g3bank.exceptions.EmptyFieldsException;
 import com.accenture.academico.g3bank.exceptions.EntityNotFoundException;
 import com.accenture.academico.g3bank.exceptions.IntegratyViolationException;
+import com.accenture.academico.g3bank.exceptions.InvalidFieldException;
 
 @ControllerAdvice
 public class ControllerExceptionHandler {
@@ -34,6 +35,14 @@ public class ControllerExceptionHandler {
 
 		StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(),
 				"Campo vazio", e.getMessage(), request.getRequestURI());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+	}
+	
+	@ExceptionHandler(InvalidFieldException.class)
+	public ResponseEntity<StandardError> dataIntegrity(InvalidFieldException e, HttpServletRequest request) {
+
+		StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(),
+				"Campo inválido", e.getMessage(), request.getRequestURI());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
 	}
 

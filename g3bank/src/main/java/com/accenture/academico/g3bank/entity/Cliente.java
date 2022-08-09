@@ -1,5 +1,7 @@
 package com.accenture.academico.g3bank.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,12 +9,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Cliente {
+public class Cliente implements Serializable {
+    private static final long serialVersionUID = 1L;
+    
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-	@Column(nullable = true)
+	@Column(nullable = false)
 	private String nomeCliente;
 	private String cpfCliente;
 	private Integer telefoneCliente;
@@ -22,7 +26,7 @@ public class Cliente {
 		
 	}
 	
-	public Cliente(Integer id, String nomeCliente, String cpfCliente, Integer telefoneCliente, String emailCliente) {
+	public Cliente(Long id, String nomeCliente, String cpfCliente, Integer telefoneCliente, String emailCliente) {
 		this.id = id;
 		this.cpfCliente = cpfCliente;
 		this.nomeCliente = nomeCliente;
@@ -31,11 +35,11 @@ public class Cliente {
 		
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -67,45 +71,36 @@ public class Cliente {
 		this.emailCliente = emailCliente;
 	}
 	
-	
-	public void setCpfCliente(String cpfCliente) {
-	   	 int[] cpfValido = new int[11];
-	   	 String letra;
-	   	 for (int i = 0; i < cpfCliente.length(); i++) {
-	   		 letra = String.valueOf(cpfCliente.charAt(i));
-	   		 cpfValido[i] = Integer.parseInt(letra);
-	   	 }
-	   	 int [] peso = {11,10,9,8,7,6,5,4,3,2};
-	        int primeirodigito = 0, segundodigito = 0;
-	        int resultado1 = cpfValido[0]*peso[1] + cpfValido[1]*peso[2] + cpfValido[2]*peso[3] +
-	                         cpfValido[3]*peso[4] + cpfValido[4]*peso[5] + cpfValido[5]*peso[6] +
-	                         cpfValido[6]*peso[7] + cpfValido[7]*peso[8] + cpfValido[8]*peso[9];
-	        int resultado2 = cpfValido[0]*peso[0] + cpfValido[1]*peso[1] + cpfValido[2]*peso[2] +
-	                         cpfValido[3]*peso[3] + cpfValido[4]*peso[4] + cpfValido[5]*peso[5] +
-	                         cpfValido[6]*peso[6] + cpfValido[7]*peso[7] + cpfValido[8]*peso[8] +
-	                         cpfValido[9]*peso[9];
-
-
-	        int resto1 = resultado1 % 11;
-	        int resto2 = resultado2 % 11;
-
-	        if (resto1 < 2){
-	            primeirodigito = 0;
-	            } else {
-	                primeirodigito = 11 - resto1;
-	            }
-	        if (resto2 < 2){
-	            segundodigito = 0;
-	            } else {
-	                segundodigito = 11 - resto2;
-	            }
-	        if (primeirodigito == cpfValido[9] && segundodigito == cpfValido[10]){
-	            this.cpfCliente = cpfCliente;
-	        }
-	    }
-
-
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Cliente other = (Cliente) obj;
+			if (id == null) {
+				if (other.id!= null) {
+					return false;
+				}
+			} else if (!id.equals(other.id)) {
+				return false;
+			}
+			return true;
+		}
+}
 
 
 

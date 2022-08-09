@@ -61,14 +61,9 @@ public class AgenciaController {
 	 @ApiOperation(value="Atualiza uma agência")
 	    public ResponseEntity<Agencia> Put(@PathVariable(value = "id") Long id, @Valid @RequestBody Agencia newAgencia)
 	    {
-	        
-	            Agencia agencia = agenciaService.search(id);
-	            agencia.setEnderecoAgencia(newAgencia.getEnderecoAgencia());
-	            agencia.setTelefoneAgencia(newAgencia.getTelefoneAgencia());
-	            agencia = agenciaService.save(agencia);
-	            
+	            Agencia agencia = agenciaService.update(id, newAgencia);
 		        return ResponseEntity.ok().body(agencia);
-	        }
+	    }
 
 	   @RequestMapping(value = "/agencia/{id}", method = RequestMethod.DELETE)
 	   @ApiOperation(value="Deleta uma agência")
