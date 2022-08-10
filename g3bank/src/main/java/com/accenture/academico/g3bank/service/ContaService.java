@@ -75,7 +75,7 @@ public class ContaService {
 		else {
 			conta.setSaldoConta(conta.getSaldoConta() - valorSaque);
 			save(conta);
-			extratoService.generateExtract(conta, Operacao.SAQUE , valorSaque);
+			extratoService.generateExtract(false, conta, Operacao.SAQUE , valorSaque, null);
 		}
 	}
 	
@@ -88,7 +88,7 @@ public class ContaService {
 		else {
 			conta.setSaldoConta(conta.getSaldoConta() + valorDeposito);
 			save(conta);
-			extratoService.generateExtract(conta, Operacao.DEPOSITO , valorDeposito);
+			extratoService.generateExtract(true, conta, Operacao.DEPOSITO , valorDeposito, null);
 		}
 	}
 	
@@ -110,8 +110,8 @@ public class ContaService {
 			contaOrigem.setSaldoConta(saldoContaOrigem - valor.getValor());
 			save(contaOrigem);
 			
-			extratoService.generateExtract(contaOrigem, Operacao.TRANSFERENCIA , valorTransferencia);
-			extratoService.generateExtract(contaDestino, Operacao.TRANSFERENCIA , valorTransferencia);
+			extratoService.generateExtract(false, contaOrigem, Operacao.TRANSFERENCIA , valorTransferencia, contaDestino);
+			extratoService.generateExtract(true, contaDestino, Operacao.TRANSFERENCIA , valorTransferencia, contaOrigem);
 		}
 		
 	}

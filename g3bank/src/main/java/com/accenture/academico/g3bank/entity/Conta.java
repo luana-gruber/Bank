@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import com.accenture.academico.g3bank.enums.TipoConta;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -35,6 +36,11 @@ public class Conta implements Serializable {
 	@JoinColumn(name = "id_agencia")
 	private Agencia agencia;
 	
+	@JsonIgnore
+	@OneToOne
+	@JoinColumn(name = "id_cliente")
+	private Cliente cliente;
+	
 	public Conta() {
 		
 	}
@@ -42,16 +48,17 @@ public class Conta implements Serializable {
 	public Conta(Long id, String numeroConta, TipoConta tipoConta, Double saldoConta) {
 		this.id = id;
 		this.numeroConta = numeroConta;
-		this.saldoConta = saldoConta;
 		this.tipoconta = tipoConta;
+		this.saldoConta = saldoConta;
 	}
 	
-	public Conta(Long id, String numeroConta, TipoConta tipoConta, Double saldoConta, Agencia agencia) {
+	public Conta(Long id, String numeroConta, TipoConta tipoConta, Double saldoConta, Agencia agencia, Cliente cliente) {
 		this.id = id;
 		this.numeroConta = numeroConta;
+		this.tipoconta = tipoConta;
 		this.saldoConta = saldoConta;
 		this.agencia = agencia;
-		this.tipoconta = tipoConta;
+		this.cliente = cliente;
 	}
 
 	public Long getId() {
@@ -82,6 +89,15 @@ public class Conta implements Serializable {
 		this.agencia = agencia;
 	}
 	
+	
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {

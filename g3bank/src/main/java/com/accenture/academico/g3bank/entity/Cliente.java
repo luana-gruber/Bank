@@ -7,6 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Cliente implements Serializable {
@@ -21,6 +25,11 @@ public class Cliente implements Serializable {
 	private String cpfCliente;
 	private Integer telefoneCliente;
 	private String emailCliente;
+	
+	@JsonIgnore
+	@OneToOne
+	@JoinColumn(name = "id_conta")
+	private Conta conta;
 
 	public Cliente() {
 		
@@ -32,6 +41,16 @@ public class Cliente implements Serializable {
 		this.nomeCliente = nomeCliente;
 		this.telefoneCliente = telefoneCliente;
 		this.emailCliente = emailCliente;
+		
+	}
+	
+	public Cliente(Long id, String nomeCliente, String cpfCliente, Integer telefoneCliente, String emailCliente, Conta conta) {
+		this.id = id;
+		this.cpfCliente = cpfCliente;
+		this.nomeCliente = nomeCliente;
+		this.telefoneCliente = telefoneCliente;
+		this.emailCliente = emailCliente;
+		this.conta = conta;
 		
 	}
 
@@ -71,6 +90,14 @@ public class Cliente implements Serializable {
 		this.emailCliente = emailCliente;
 	}
 	
+	public Conta getConta() {
+		return conta;
+	}
+
+	public void setConta(Conta conta) {
+		this.conta = conta;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

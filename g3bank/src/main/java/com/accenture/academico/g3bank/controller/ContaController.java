@@ -1,26 +1,22 @@
 package com.accenture.academico.g3bank.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.accenture.academico.g3bank.entity.Agencia;
-import com.accenture.academico.g3bank.entity.Cliente;
 import com.accenture.academico.g3bank.entity.Conta;
 import com.accenture.academico.g3bank.service.ContaService;
+import com.accenture.academico.g3bank.service.ExtratoService;
 import com.accenture.academico.g3bank.util.ValorOperacao;
 
 import io.swagger.annotations.ApiOperation;
@@ -31,6 +27,9 @@ public class ContaController {
 	
 	@Autowired
 	private ContaService contaService;
+	
+	@Autowired
+	private ExtratoService extratoService;
 	
 	 @GetMapping(value = "/contas")
 	 @ApiOperation(value="Retorna uma lista de contas")
@@ -88,14 +87,14 @@ public class ContaController {
 	   	@ApiOperation(value="Faz operação de depósito")
 		public ResponseEntity<Void> Deposit(@PathVariable(value = "id") Long id,  @Valid @RequestBody ValorOperacao valor) {
 			contaService.deposit(id, valor);
-			return ResponseEntity.noContent().build();
+			return ResponseEntity.ok().build();
 		}
 		
 	   	@RequestMapping(value = "/transferir/{idOrigem}/{idDestino}", method =  RequestMethod.PUT)
 	   	@ApiOperation(value="Faz operação de transfêrencia")
 		public ResponseEntity<Void> Transfer(@PathVariable(value = "idOrigem") Long idContaOrigem, @PathVariable(value = "idDestino") Long idContaDestino,  @Valid @RequestBody ValorOperacao valor ) {
 			contaService.transfer(idContaOrigem, idContaDestino, valor);
-			return ResponseEntity.noContent().build();
+			return ResponseEntity.ok().build();
 		}
 	    
 }

@@ -37,15 +37,21 @@ public class Init implements ApplicationListener<ContextRefreshedEvent> {
 		ValorOperacao valor = new ValorOperacao();
 		Conta conta1 = new Conta(null, "1234", TipoConta.CORRENTE, 1400.00);
 		Conta conta2 = new Conta(null, "2345", TipoConta.CORRENTE, 1300.00);
-		Cliente cliente1 = new Cliente(null, "Luana", "35877842307", 99999999, "luana@gmail.com" );
+		Cliente cliente1 = new Cliente(null, "Luana", "35877842307", 99999999, "luana@gmail.com", conta1);
+		Cliente cliente2 = new Cliente(null, "Kerollen", "32467552489", 99999999, "kerollen@gmail.com", conta2);
 		Agencia agencia = new Agencia(null, "NovaG3", "Rua Osvaldo Cruz, 1999", "(19)9999-9999", 24, Arrays.asList(conta1, conta2));
 		
+		agenciaRepo.saveAll(Arrays.asList(agencia));
+		contaRepo.saveAll(Arrays.asList(conta1, conta2));
+		clienteRepo.save(cliente1);
+		clienteRepo.save(cliente2);
 		conta1.setAgencia(agencia);
 		conta2.setAgencia(agencia);
+		conta1.setCliente(cliente1);
+		conta2.setCliente(cliente2);
+		contaRepo.saveAll(Arrays.asList(conta1, conta2));
 		
-		agenciaRepo.saveAll(Arrays.asList(agencia));
-		contaRepo.saveAll(Arrays.asList(conta1));
-		clienteRepo.save(cliente1);
+		
 		valor.setValor(200.00);
 		contaService.deposit(conta1.getId(), valor);
 		valor.setValor(50.00);

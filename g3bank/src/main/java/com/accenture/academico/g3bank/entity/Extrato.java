@@ -28,6 +28,7 @@ public class Extrato implements Serializable {
 	
 	@Column(nullable = true)
 	private Double valor;
+	private String informacoes; 
 	
 	@Enumerated(EnumType.STRING)
 	private Operacao tipoOperacao;
@@ -78,6 +79,14 @@ public class Extrato implements Serializable {
 	
 	public void setConta(Conta conta) {
 		this.conta = conta;
+	}
+	
+	public String getInformacoes() {
+		return informacoes;
+	}
+	
+	public void setInformacoes(String informacoes) {
+		this.informacoes = informacoes;
 	}
 	
 	@Override
