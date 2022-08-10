@@ -14,6 +14,7 @@ import com.accenture.academico.g3bank.repository.AgenciaRepository;
 import com.accenture.academico.g3bank.repository.ClienteRepository;
 import com.accenture.academico.g3bank.repository.ContaRepository;
 import com.accenture.academico.g3bank.service.ContaService;
+import com.accenture.academico.g3bank.util.ValorOperacao;
 
 @Component
 public class Init implements ApplicationListener<ContextRefreshedEvent> {
@@ -33,6 +34,7 @@ public class Init implements ApplicationListener<ContextRefreshedEvent> {
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
+		ValorOperacao valor = new ValorOperacao();
 		Conta conta1 = new Conta(null, "1234", TipoConta.CORRENTE, 1400.00);
 		Conta conta2 = new Conta(null, "2345", TipoConta.CORRENTE, 1300.00);
 		Cliente cliente1 = new Cliente(null, "Luana", "35877842307", 99999999, "luana@gmail.com" );
@@ -44,8 +46,12 @@ public class Init implements ApplicationListener<ContextRefreshedEvent> {
 		agenciaRepo.saveAll(Arrays.asList(agencia));
 		contaRepo.saveAll(Arrays.asList(conta1));
 		clienteRepo.save(cliente1);
-		contaService.deposit(conta1.getId(), 200.00);
-		contaService.withdraw(conta1.getId(), 50.00);
-		contaService.transfer(conta1.getId(), conta2.getId(), 50.00);
+		valor.setValor(200.00);
+		contaService.deposit(conta1.getId(), valor);
+		valor.setValor(50.00);
+		contaService.withdraw(conta1.getId(), valor);
+		valor.setValor(100.00);
+		contaService.transfer(conta1.getId(), conta2.getId(), valor);
+
 	}
 }

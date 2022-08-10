@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.accenture.academico.g3bank.exceptions.BusinessRuleException;
 import com.accenture.academico.g3bank.exceptions.EmptyFieldsException;
 import com.accenture.academico.g3bank.exceptions.EntityNotFoundException;
 import com.accenture.academico.g3bank.exceptions.IntegratyViolationException;
@@ -43,6 +44,14 @@ public class ControllerExceptionHandler {
 
 		StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(),
 				"Campo inválido", e.getMessage(), request.getRequestURI());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+	}
+	
+	@ExceptionHandler(BusinessRuleException.class)
+	public ResponseEntity<StandardError> dataIntegrity(BusinessRuleException e, HttpServletRequest request) {
+
+		StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(),
+				"Regra de negócio", e.getMessage(), request.getRequestURI());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
 	}
 

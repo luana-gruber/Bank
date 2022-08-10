@@ -1,6 +1,5 @@
 package com.accenture.academico.g3bank.service;
 
-import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Optional;
 
@@ -37,11 +36,7 @@ public class ExtratoService {
 	public void generateExtract(Conta conta, Operacao operacao, Double valor) {
 		Calendar data = Calendar.getInstance();
 		
-		Extrato extrato = new Extrato();
-		extrato.setConta(conta);
-		extrato.setTipoOperacao(operacao);
-		extrato.setValor(valor);
-		extrato.setData(data);
+		Extrato extrato = new Extrato(data, operacao, valor, conta);
 		save(extrato);
 	}
 }

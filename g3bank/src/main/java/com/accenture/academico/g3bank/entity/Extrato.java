@@ -1,7 +1,6 @@
 package com.accenture.academico.g3bank.entity;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Calendar;
 
 import javax.persistence.Column;

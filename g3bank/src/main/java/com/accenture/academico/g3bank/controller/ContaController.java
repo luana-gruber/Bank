@@ -21,6 +21,7 @@ import com.accenture.academico.g3bank.entity.Agencia;
 import com.accenture.academico.g3bank.entity.Cliente;
 import com.accenture.academico.g3bank.entity.Conta;
 import com.accenture.academico.g3bank.service.ContaService;
+import com.accenture.academico.g3bank.util.ValorOperacao;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -76,23 +77,23 @@ public class ContaController {
 		   return ResponseEntity.noContent().build();
 	    }
 	   
-	   	@RequestMapping(value ="/sacar/{id}", method =  RequestMethod.POST)
+	   	@RequestMapping(value ="/sacar/{id}", method =  RequestMethod.PUT)
 	   	@ApiOperation(value="Faz operação de saque")
-		public ResponseEntity<Void> Withdraw(@PathVariable(value = "id") Long id, @RequestBody Double valor) {
+		public ResponseEntity<Void> Withdraw(@PathVariable(value = "id") Long id, @Valid @RequestBody ValorOperacao valor) {
 			contaService.withdraw(id, valor);
 			return ResponseEntity.noContent().build();
 		}
 	   	
-	   	@RequestMapping(value = "/depositar/{id}", method =  RequestMethod.POST)
+	   	@RequestMapping(value = "/depositar/{id}", method =  RequestMethod.PUT)
 	   	@ApiOperation(value="Faz operação de depósito")
-		public ResponseEntity<Void> Deposit(@PathVariable(value = "id") Long id, @RequestBody Double valor) {
+		public ResponseEntity<Void> Deposit(@PathVariable(value = "id") Long id,  @Valid @RequestBody ValorOperacao valor) {
 			contaService.deposit(id, valor);
 			return ResponseEntity.noContent().build();
 		}
 		
-	   	@RequestMapping(value = "/transferir{id}", method =  RequestMethod.POST)
+	   	@RequestMapping(value = "/transferir/{idOrigem}/{idDestino}", method =  RequestMethod.PUT)
 	   	@ApiOperation(value="Faz operação de transfêrencia")
-		public ResponseEntity<Void> Transfer(@PathVariable(value = "id") Long idContaOrigem, @RequestBody Long idContaDestino, double valor) {
+		public ResponseEntity<Void> Transfer(@PathVariable(value = "idOrigem") Long idContaOrigem, @PathVariable(value = "idDestino") Long idContaDestino,  @Valid @RequestBody ValorOperacao valor ) {
 			contaService.transfer(idContaOrigem, idContaDestino, valor);
 			return ResponseEntity.noContent().build();
 		}
