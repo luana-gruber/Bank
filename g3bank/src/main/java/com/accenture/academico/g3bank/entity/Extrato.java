@@ -29,6 +29,7 @@ public class Extrato implements Serializable {
 	@Column(nullable = true)
 	private Double valor;
 	private String informacoes; 
+	private Double saldoAnterior = 0.0;
 	
 	@Enumerated(EnumType.STRING)
 	private Operacao tipoOperacao;
@@ -38,11 +39,12 @@ public class Extrato implements Serializable {
 	
 	public Extrato() {
 	}
-	public Extrato(Calendar dataHoraMovimento, Operacao tipoOperacao, Double valor, Conta conta) {
+	public Extrato(Calendar dataHoraMovimento, Operacao tipoOperacao, Double valor, Conta conta, Double saldoAnterior) {
 		this.dataHoraMovimento = dataHoraMovimento;
 		this.tipoOperacao = tipoOperacao;
 		this.valor = valor;
 		this.conta = conta;
+		this.saldoAnterior = saldoAnterior;
 	}
 	
 	public Long getId() {
@@ -87,6 +89,13 @@ public class Extrato implements Serializable {
 	
 	public void setInformacoes(String informacoes) {
 		this.informacoes = informacoes;
+	}
+	
+	public Double getSaldoAnterior() {
+		return saldoAnterior;
+	}
+	public void setSaldoAnterior(Double saldoAnterior) {
+		this.saldoAnterior = saldoAnterior;
 	}
 	
 	@Override

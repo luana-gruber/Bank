@@ -32,10 +32,10 @@ public class ExtratoService {
 			return Optional.ofNullable(extratos).orElseThrow(() -> new EntityNotFoundException("Extrato não encontrado para essa conta! id: " + conta.getId()));
 	}
 	
-	public void generateExtract(Boolean credito, Conta conta, Operacao operacao, Double valor, Conta contaDestino) {
+	public void generateExtract(Boolean credito, Conta conta, Operacao operacao, Double valor, Conta contaDestino, Double saldoAnterior) {
 		Calendar data = Calendar.getInstance();
 		
-		Extrato extrato = new Extrato(data, operacao, valor, conta);
+		Extrato extrato = new Extrato(data, operacao, valor, conta, saldoAnterior);
 		extrato.setInformacoes(generateInform(credito, conta, operacao, valor, contaDestino, data));
 		extratoRepository.save(extrato);
 	}
