@@ -11,6 +11,7 @@ import com.accenture.academico.g3bank.enums.Operacao;
 import com.accenture.academico.g3bank.exceptions.BusinessRuleException;
 import com.accenture.academico.g3bank.exceptions.EmptyFieldsException;
 import com.accenture.academico.g3bank.exceptions.EntityNotFoundException;
+import com.accenture.academico.g3bank.exceptions.IntegratyViolationException;
 import com.accenture.academico.g3bank.exceptions.InvalidFieldException;
 import com.accenture.academico.g3bank.repository.ContaRepository;
 import com.accenture.academico.g3bank.util.ValorOperacao;
@@ -59,7 +60,14 @@ public class ContaService {
 	}
 	
 	public void delete(Long id) {
+		Conta conta = search(id);
+		
+		if (conta.getAgencia() == null && conta.getCliente() == null) {
 			contaRepository.deleteById(id);
+		}
+		else  {
+			throw new IntegratyViolationException("Não é possível excluir a conta que possuí agência e cliente!");
+		}
 		
 	}
 	

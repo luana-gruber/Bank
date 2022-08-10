@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.accenture.academico.g3bank.entity.Cliente;
 import com.accenture.academico.g3bank.exceptions.EmptyFieldsException;
 import com.accenture.academico.g3bank.exceptions.EntityNotFoundException;
+import com.accenture.academico.g3bank.exceptions.IntegratyViolationException;
 import com.accenture.academico.g3bank.exceptions.InvalidFieldException;
 import com.accenture.academico.g3bank.repository.ClienteRepository;
 
@@ -108,7 +109,13 @@ public class ClienteService {
 	public void delete(String cpfCliente) {
 		validCpf(cpfCliente);
 		Cliente cliente = searchCpf(cpfCliente);
-		clienteRepository.deleteById(cliente.getId());
+		
+		if (cliente.getConta() == null) {
+			clienteRepository.deleteById(cliente.getId());
+		}
+		else  {
+			throw new IntegratyViolationException("Não é possível excluir o cliente que possuí conta!");
+		}
 		
 	}
 }
