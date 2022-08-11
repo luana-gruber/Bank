@@ -102,8 +102,16 @@ public class ClienteService {
 		Cliente cliente = searchCpf(newCliente.getCpfCliente());
 		cliente.setEmailCliente(newCliente.getEmailCliente());
         cliente.setTelefoneCliente(newCliente.getTelefoneCliente());
-
-		return clienteRepository.save(cliente);
+        
+        if (newCliente.getEmailCliente().isEmpty()) {
+			throw new EmptyFieldsException("E-mail do cliente não foi preenchido!");
+		}
+		else if (newCliente.getTelefoneCliente() == null) {
+			throw new EmptyFieldsException("Telefone do cliente não foi preenchido!");
+		}
+		else {
+			return clienteRepository.save(cliente);
+		}
 	}
 
 	public void delete(String cpfCliente) {

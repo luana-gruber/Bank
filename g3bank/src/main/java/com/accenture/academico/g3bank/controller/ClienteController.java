@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.accenture.academico.g3bank.entity.Agencia;
 import com.accenture.academico.g3bank.entity.Cliente;
 import com.accenture.academico.g3bank.service.ClienteService;
 
@@ -20,17 +22,28 @@ import io.swagger.annotations.ApiOperation;
 
 @Controller
 @RestController
-@RequestMapping(path = "/g3bank")
+@RequestMapping
 public class ClienteController {
 
 	@Autowired
 	private ClienteService clienteService;
 
-	@RequestMapping(value = "/clientes", method = RequestMethod.GET)
+	@RequestMapping(value = "/cliente", method = RequestMethod.GET)
 	@ApiOperation(value="Retorna uma lista de clientes")
 	    public ResponseEntity<List<Cliente>> Get() {
 		List<Cliente> clientes = clienteService.searchAll();
         return ResponseEntity.ok().body(clientes);
+	}
+	
+	@RequestMapping(value = "/clientes", method = RequestMethod.GET)
+	@ApiOperation(value="Retorna uma lista de clientes")
+	    public ModelAndView get() {
+		List<Cliente> clientes = clienteService.searchAll();
+		
+		ModelAndView modelAndView = new ModelAndView("clientes");
+		modelAndView.addObject("clientes", clientes);
+		
+		return modelAndView;
 	}
 
 

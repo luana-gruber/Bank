@@ -51,24 +51,24 @@ public class ExtratoService {
 	private String generateDebt(Conta conta, Operacao tipo, Double valor, Conta contaDestino, Calendar data) {
 		if(Operacao.TRANSFERENCIA.equals(tipo)) {
 			return String.format("DATA: %s\n"
-					+ "TRANFERÊNCIA REALIZADA DE R$ %.2f\n"
-					+ "PARA %s, CONTA: %s AG: %s", dataUtil.dataFormatada(data.getTime()), valor, contaDestino.getCliente().getNomeCliente().split(" ")[0],
+					+ "- TRANFERÊNCIA DE R$ %.2f\n"
+					+ "REALIZADA PARA %s, CONTA: %s AG: %s", dataUtil.dataFormatada(data.getTime()), valor, contaDestino.getCliente().getNomeCliente().split(" ")[0],
 					contaDestino.getNumeroConta(), contaDestino.getAgencia().getNomeAgencia());
 		}else {
 			return String.format("DATA: %s\n"
-					+ "SAQUE DE R$ %.2f", dataUtil.dataFormatada(data.getTime()), valor);
+					+ "- SAQUE DE R$ %.2f", dataUtil.dataFormatada(data.getTime()), valor);
 		}
 	}
 
 	private String generateCredit(Conta conta, Operacao tipo, Double valor, Conta contaDestino, Calendar data) {
 		if(Operacao.TRANSFERENCIA.equals(tipo)) {
 			return String.format("DATA: %s\n"
-					+ "TRANFERÊNCIA RECEBIDA DE R$ %.2f\n"
+					+ "- TRANFERÊNCIA RECEBIDA DE R$ %.2f\n"
 					+ "POR %s, CONTA: %s AG: %s", dataUtil.dataFormatada(data.getTime()), valor, conta.getCliente().getNomeCliente().split(" ")[0],
 					conta.getNumeroConta(), conta.getAgencia().getNomeAgencia());
 		}else {
 			return String.format("DATA: %s\n"
-					+ "DEPÓSITO DE R$ %.2f", dataUtil.dataFormatada(data.getTime()), valor);
+					+ "- DEPÓSITO DE R$ %.2f", dataUtil.dataFormatada(data.getTime()), valor);
 		}
 	}
 

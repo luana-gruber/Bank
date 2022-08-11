@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.accenture.academico.g3bank.entity.Agencia;
 import com.accenture.academico.g3bank.service.AgenciaService;
@@ -20,19 +21,29 @@ import io.swagger.annotations.ApiOperation;
 
 @Controller
 @RestController
-@RequestMapping(path = "/g3bank")
+@RequestMapping
 public class AgenciaController {
 	
 
 	@Autowired
 	private AgenciaService agenciaService;
 	
-	 @RequestMapping(value = "/agencia", method = RequestMethod.GET)
+	@RequestMapping(value = "/agencia", method = RequestMethod.GET)
 	 @ApiOperation(value="Retorna uma lista de agências")
 	    public ResponseEntity<List<Agencia>> Get() {
 		 	List<Agencia> agencias = agenciaService.searchAll();
 	        return ResponseEntity.ok().body(agencias);
 	    }
+	
+	 @RequestMapping(value = "/agencias", method = RequestMethod.GET)
+		public ModelAndView get() {
+			List<Agencia> agencias = agenciaService.searchAll();
+			
+			ModelAndView modelAndView = new ModelAndView("agencias");
+			modelAndView.addObject("agencias", agencias);
+			
+			return modelAndView;
+	 }
 	 
 	 @RequestMapping(value = "/agencia/{id}", method = RequestMethod.GET)
 	 @ApiOperation(value="Retorna uma agência única")

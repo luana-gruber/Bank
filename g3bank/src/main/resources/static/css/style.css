@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+
+body {
+	margin-top: 20px;
+	font-family: 'Poppins', sans-serif;
+}
+footer{
+	height: 50px;
+	position: absolute;
+	bottom: 0; 
+	width: 100%;
+}
+
+.nav {
+	background-image: -webkit-linear-gradient(top,rgb(95, 22, 148) 0, rgb(163, 107, 167)  100%) !important ;
+	color: white !important ;
+}
+
+.nav-drop{
+	background-color: rgb(115, 27, 180) !important ;
+	color: white !important ;
+}
+
+.nav-drop>li>a:focus,
+.nav-drop>li>a:hover{
+	background-color: rgb(115, 27, 180) !important ;
+	color: rgb(115, 27, 180)  !important ;
+}
+
+.navbar-brand{
+	font-family: 'Righteous', cursive;
+	font-size: 30px;
+}
+.span-menu{
+	font-family: 'Poppins', sans-serif;
+	font-size: 15px;
+}
+.text-right{
+	margin-right: 18px;
+}

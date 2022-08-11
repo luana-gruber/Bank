@@ -10,6 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -35,6 +36,7 @@ public class Extrato implements Serializable {
 	private Operacao tipoOperacao;
 	
 	@ManyToOne
+	@JoinColumn(name = "id_conta")
 	private Conta conta;
 	
 	public Extrato() {

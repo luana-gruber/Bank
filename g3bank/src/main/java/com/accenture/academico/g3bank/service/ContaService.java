@@ -55,8 +55,12 @@ public class ContaService {
 	public Conta update(Long id, Conta newConta) {
         Conta conta = search(newConta.getId());
         conta.setAgencia(newConta.getAgencia());
-       
-        return  contaRepository.save(conta);
+        if (newConta.getAgencia() == null) {
+			throw new EmptyFieldsException("A agência não foi preenchida!");
+		}
+        else {
+        	return  contaRepository.save(conta);
+        }
 	}
 	
 	public void delete(Long id) {

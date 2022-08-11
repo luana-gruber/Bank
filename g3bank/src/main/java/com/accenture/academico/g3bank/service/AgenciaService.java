@@ -50,9 +50,17 @@ public class AgenciaService {
             Agencia agencia = search(newAgencia.getId());
             agencia.setEnderecoAgencia(newAgencia.getEnderecoAgencia());
             agencia.setTelefoneAgencia(newAgencia.getTelefoneAgencia());
+            if (newAgencia.getEnderecoAgencia().isEmpty()) {
+    			throw new EmptyFieldsException("Endereço da agência não foi preenchido!");
+    		}
+            else if (newAgencia.getTelefoneAgencia().isEmpty()) {
+    			throw new EmptyFieldsException("Telefone da agência não foi preenchido!");
+    		}
+            else {
             agencia.setContas(newAgencia.getContas());
            
             return  agenciaRepository.save(agencia);
+            }
     }
 	
 	public void delete(Long id) {

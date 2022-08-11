@@ -1,0 +1,81 @@
+​​<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>G3BANK</title>
+        
+        <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"  rel="stylesheet" />
+        
+        <link th:href="@{/webjars/bootstrap/css/bootstrap-theme.min.css}"  rel="stylesheet" />
+        
+        <link th:href="@{/webjars/font-awesome/css/font-awesome.min.css}"  rel="stylesheet" />
+        
+        <link th:href="@{/css/style.css}" rel="stylesheet" />
+    </head>
+
+    <body>
+        <nav class="navbar navbar-default navbar-fixed-top nav">
+            <div class="container nav">
+                <div class="navbar-header nav">
+                    <button type="button" class="navbar-toggle collapsed nav"
+                        data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                        aria-controls="navbar">
+                        <span class="sr-only nav">Toggle navigation</span> <span
+                            class="icon-bar"></span> <span class="icon-bar"></span> <span
+                            class="icon-bar"></span>
+                    </button>
+    
+                    <a class="navbar-brand nav" th:href="@{/agencias}">G3ANK</a>
+                </div>
+                <div id="navbar" class="collapse navbar-collapse nav">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown nav">
+                           <a href="#" class="dropdown-toggle nav" 
+                               data-toggle="dropdown" role="button" aria-haspopup="true"
+                              aria-expanded="false"> 
+                              <span class="span-menu">Menu</span>
+                              <span class="caret"></span>
+                           </a>
+    
+                            <ul class="dropdown-menu nav-drop">
+                                <li><a class="nav-drop" th:href="@{/agencias}" >Agências</a></li>
+                                <li><a class="nav-drop" th:href="@{/clientes}" >Clientes</a></li>
+                                <li><a class="nav-drop" th:href="@{/contas}" >Contas</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    
+        <div class="container">
+            <div class="page-header">
+                <h3 style="color:rgb(115, 27, 180)">Contas cadastradas</h3>
+            </div>
+            
+            <table class="table table-hover">
+                <thead>
+                    <tr style="color:rgb(115, 27, 180)">
+                        <th>Número</th>
+                        <th>Tipo</th>
+                        <th>Saldo</th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    <tr th:each="conta: ${contas}" style="color:rgb(71, 17, 111)">
+                        <td th:text="${conta.numeroConta}"></td>
+                        <td th:text="${conta.tipoconta}"></td>
+                        <td th:text="${conta.saldoConta}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    
+   <footer class="nav">
+   
+   </footer>
+        <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    
+        <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    </body>
+</html>

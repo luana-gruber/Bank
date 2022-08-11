@@ -13,29 +13,37 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.accenture.academico.g3bank.entity.Conta;
 import com.accenture.academico.g3bank.service.ContaService;
-import com.accenture.academico.g3bank.service.ExtratoService;
 import com.accenture.academico.g3bank.util.ValorOperacao;
 
 import io.swagger.annotations.ApiOperation;
 
 @Controller
-@RequestMapping(path = "/g3bank")
+@RequestMapping
 public class ContaController {
 	
 	@Autowired
 	private ContaService contaService;
 	
-	@Autowired
-	private ExtratoService extratoService;
-	
-	 @GetMapping(value = "/contas")
+	 @GetMapping(value = "/conta")
 	 @ApiOperation(value="Retorna uma lista de contas")
 	    public  ResponseEntity <List<Conta>> Get() {
 		 List<Conta> contas = contaService.searchAll();
 	        return ResponseEntity.ok().body(contas);
+	    }
+	
+	 @GetMapping(value = "/contas")
+	 @ApiOperation(value="Retorna uma lista de contas")
+	    public  ModelAndView get() {
+		 List<Conta> contas = contaService.searchAll();
+
+		 ModelAndView modelAndView = new ModelAndView("contas");
+			modelAndView.addObject("contas", contas);
+			
+			return modelAndView;
 	    }
 	 
 	 @GetMapping(value = "/conta/{id}")
@@ -78,23 +86,26 @@ public class ContaController {
 	   
 	   	@RequestMapping(value ="/sacar/{id}", method =  RequestMethod.PUT)
 	   	@ApiOperation(value="Faz operação de saque")
-		public ResponseEntity<Void> Withdraw(@PathVariable(value = "id") Long id, @Valid @RequestBody ValorOperacao valor) {
+		public ResponseEntity<String> Withdraw(@PathVariable(value = "id") Long id, @Valid @RequestBody ValorOperacao valor) {
 			contaService.withdraw(id, valor);
-			return ResponseEntity.noContent().build();
+			String message = "Saque realizado com sucesso!";
+			return ResponseEntity.ok().body(message);
 		}
 	   	
 	   	@RequestMapping(value = "/depositar/{id}", method =  RequestMethod.PUT)
 	   	@ApiOperation(value="Faz operação de depósito")
-		public ResponseEntity<Void> Deposit(@PathVariable(value = "id") Long id,  @Valid @RequestBody ValorOperacao valor) {
+		public ResponseEntity<String> Deposit(@PathVariable(value = "id") Long id,  @Valid @RequestBody ValorOperacao valor) {
 			contaService.deposit(id, valor);
-			return ResponseEntity.ok().build();
+			String message = "Depósito realizado com sucesso";
+			return ResponseEntity.ok().body(message);
 		}
 		
 	   	@RequestMapping(value = "/transferir/{idOrigem}/{idDestino}", method =  RequestMethod.PUT)
 	   	@ApiOperation(value="Faz operação de transfêrencia")
-		public ResponseEntity<Void> Transfer(@PathVariable(value = "idOrigem") Long idContaOrigem, @PathVariable(value = "idDestino") Long idContaDestino,  @Valid @RequestBody ValorOperacao valor ) {
+		public ResponseEntity<String> Transfer(@PathVariable(value = "idOrigem") Long idContaOrigem, @PathVariable(value = "idDestino") Long idContaDestino,  @Valid @RequestBody ValorOperacao valor ) {
 			contaService.transfer(idContaOrigem, idContaDestino, valor);
-			return ResponseEntity.ok().build();
+			String message = "Transferência realizada com sucesso!";
+			return ResponseEntity.ok().body(message);
 		}
 	    
 }
